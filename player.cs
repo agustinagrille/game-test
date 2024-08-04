@@ -3,6 +3,9 @@ using System;
 
 public partial class player : Area2D
 {
+	[Signal]
+	public delegate void HitEventHandler();
+	
 	 [Export]
 	public int Speed { get; set; } = 400; // How fast the player will move (pixels/sec).
 
@@ -55,4 +58,34 @@ public partial class player : Area2D
 	x: Mathf.Clamp(Position.X, 0, ScreenSize.X),
 	y: Mathf.Clamp(Position.Y, 0, ScreenSize.Y)
 	);
-}}
+	
+	if (velocity.X != 0)
+{
+	animatedSprite2D.Animation = "walk";
+	animatedSprite2D.FlipV = false;
+	// See the note below about the following boolean assignment.
+	animatedSprite2D.FlipH = velocity.X < 0;
+}
+else if (velocity.Y != 0)
+{
+	animatedSprite2D.Animation = "up";
+	animatedSprite2D.FlipV = velocity.Y > 0;
+}
+}
+
+private void _on_body_entered(Node2D body)
+{
+Hide(); // Player disappears after being hit.
+	EmitSignal(SignalName.Hit);
+	// Must be deferred as we can't change physics properties on a physics callback.
+	GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+}
+
+
+public void Start(Vector2 position)
+{
+	Position = position;
+	Show();
+	GetNode<CollisionShape2D>("CollisionShape2D").Disabled = false;
+}
+}
