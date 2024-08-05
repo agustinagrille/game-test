@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d118o8p2ml424"]
+[gd_scene load_steps=10 format=3 uid="uid://c2rk7h5gy367e"]
 
 [ext_resource type="Script" path="res://Mob.cs" id="1_6dh03"]
 [ext_resource type="Texture2D" uid="uid://dv178w433j4ls" path="res://art/enemyFlyingAlt_1.png" id="1_iaojw"]
@@ -48,23 +48,24 @@ animations = [{
 radius = 53.0
 height = 116.0
 
-[node name="Mob" type="Node2D"]
-script = ExtResource("1_6dh03")
-
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="Mob" type="RigidBody2D"]
 collision_mask = 0
 gravity_scale = 0.0
+script = ExtResource("1_6dh03")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="RigidBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_dag5u")
 animation = &"fly"
-frame_progress = 0.969807
+frame_progress = 0.841013
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-10, 0)
+rotation = 1.5708
+scale = Vector2(0.75, 0.75)
 shape = SubResource("CapsuleShape2D_akqch")
+metadata/_edit_group_ = true
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="RigidBody2D"]
-
-[connection signal="screen_exited" from="RigidBody2D/VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

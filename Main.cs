@@ -23,6 +23,7 @@ public void GameOver()
 {
 	GetNode<Timer>("MobTimer").Stop();
 	GetNode<Timer>("ScoreTimer").Stop();
+
 }
 
 public void NewGame()
