@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+
 public partial class Main : Node
 {
 	[Export]
@@ -23,18 +24,7 @@ public void GameOver()
 {
 	GetNode<Timer>("MobTimer").Stop();
 	GetNode<Timer>("ScoreTimer").Stop();
-
-}
-
-public void NewGame()
-{
-	_score = 0;
-
-	var player = GetNode<Player>("Player");
-	var startPosition = GetNode<Marker2D>("StartPosition");
-	player.Start(startPosition.Position);
-
-	GetNode<Timer>("StartTimer").Start();
+	GetNode<Hud>("HUD").ShowGameOver();
 }
 
 
@@ -80,5 +70,25 @@ private void _on_start_timer_timeout()
 private void _on_score_timer_timeout()
 {
 	_score++;
+	GetNode<Hud>("HUD").UpdateScore(_score);
+}
+
+private void NewGame()
+{
+	_score = 0;
+
+	var player = GetNode<Player>("Player");
+	var startPosition = GetNode<Marker2D>("StartPosition");
+	player.Start(startPosition.Position);
+
+	GetNode<Timer>("StartTimer").Start();
+	
+	var hud = GetNode<HUD>("HUD");
+	hud.UpdateScore(_score);
+	hud.ShowMessage("Get Ready!");
+	
+	GetTree().CallGroup("mobs", Node.MethodName.QueueFree);
+
 }
 }
+
