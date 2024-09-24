@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://rrw0nkwgx8bx"]
+
+[ext_resource type="Script" path="res://Hud.cs" id="1_cp4td"]
+[ext_resource type="FontFile" uid="uid://xtok5hg5ogf5" path="res://fonts/Xolonium-Regular.ttf" id="2_buqcq"]
+
+[node name="HUB" type="CanvasLayer"]
+script = ExtResource("1_cp4td")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 223.0
+offset_top = 11.0
+offset_right = 268.0
+offset_bottom = 89.0
+theme_override_fonts/font = ExtResource("2_buqcq")
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message" type="Label" parent="."]
+offset_left = 46.0
+offset_top = 217.0
+offset_right = 452.0
+offset_bottom = 376.0
+theme_override_fonts/font = ExtResource("2_buqcq")
+theme_override_font_sizes/font_size = 64
+text = "Monstruitos 
+al ataque"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 151.0
+offset_top = 474.0
+offset_right = 353.0
+offset_bottom = 560.0
+theme_override_fonts/font = ExtResource("2_buqcq")
+theme_override_font_sizes/font_size = 64
+text = "Inicio!"
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
